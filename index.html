@@ -11,8 +11,7 @@
     
     <style>
         :root {
-            /* Updated to Red Esports Theme */
-            --bg-dark: #0a0000;
+            var(--bg-dark): #0a0000;
             --bg-panel: rgba(20, 5, 5, 0.85);
             --primary: #ff2a2a; 
             --primary-glow: rgba(255, 42, 42, 0.8);
@@ -37,9 +36,9 @@
 
         body {
             font-family: 'Montserrat', sans-serif;
-            background-color: var(--bg-dark);
+            background-color: #0a0000;
             background-image:
-                radial-gradient(circle at 50% 50%, rgba(40, 0, 0, 0.8) 0%, var(--bg-dark) 80%),
+                radial-gradient(circle at 50% 50%, rgba(40, 0, 0, 0.8) 0%, #0a0000 80%),
                 linear-gradient(rgba(255, 42, 42, 0.05) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(255, 42, 42, 0.05) 1px, transparent 1px);
             background-size: 100% 100%, 40px 40px, 40px 40px;
@@ -53,53 +52,6 @@
         h1, h2, h3, h4, .logo, .sidebar a, .start-btn, .action-card-btn, button {
             font-family: 'Bebas Neue', sans-serif;
             letter-spacing: 1px;
-        }
-
-        body:not(.logged-in) header,
-        body:not(.logged-in) .sidebar { display: none !important; }
-
-        body:not(.logged-in) main .page-section:not(#user-auth) { display: none !important; }
-
-        body:not(.logged-in) #user-auth {
-            display: flex !important;
-            flex-direction: column;
-            justify-content: center;
-            opacity: 1 !important;
-            min-height: 100vh;
-            padding-top: 20px;
-        }
-
-        body.logged-in .auth-header { display: none; }
-
-        #login-animation {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            background: var(--bg-dark); z-index: 9999; display: none;
-            flex-direction: column; justify-content: center; align-items: center;
-            color: var(--primary);
-            padding: 20px;
-        }
-
-        #login-animation .spinner {
-            width: clamp(50px, 10vw, 80px); 
-            height: clamp(50px, 10vw, 80px);
-            border: 6px solid rgba(255, 42, 42, 0.2);
-            border-top-color: var(--primary);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin-bottom: 20px;
-            box-shadow: 0 0 30px var(--primary-glow);
-        }
-
-        @keyframes spin { 100% { transform: rotate(360deg); } }
-
-        #login-animation h2 {
-            font-size: var(--font-xxl); text-shadow: 0 0 20px var(--primary-glow);
-            animation: pulseText 1.5s infinite; text-align: center;
-        }
-
-        @keyframes pulseText { 
-            0%, 100% { opacity: 1; transform: scale(1); } 
-            50% { opacity: 0.6; transform: scale(0.98); } 
         }
 
         #live-bg { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; pointer-events: none; }
@@ -116,11 +68,6 @@
 
         .logo { font-size: clamp(1.5rem, 5vw, 2.2rem); color: var(--text-light); text-decoration: none; cursor: pointer; text-shadow: 0 0 10px rgba(255, 42, 42, 0.6); }
         .logo span { color: var(--primary); text-shadow: 0 0 10px var(--primary-glow); }
-
-        .header-controls { display: flex; align-items: center; gap: 15px; }
-
-        .profile-icon { font-size: 1.4rem; color: var(--text-light); cursor: pointer; transition: 0.3s; display: none; }
-        .profile-icon:hover { color: var(--primary); text-shadow: 0 0 15px var(--primary-glow); transform: scale(1.1); }
 
         .menu-toggle { display: flex; flex-direction: column; gap: 5px; cursor: pointer; z-index: 1001; }
         .menu-toggle div { width: 28px; height: 3px; background-color: var(--primary); transition: all 0.3s ease; border-radius: 2px; box-shadow: 0 0 5px var(--primary-glow); }
@@ -143,8 +90,12 @@
         }
         .sidebar a:hover { background: var(--primary); color: #fff; font-weight: bold; padding-left: 30px; box-shadow: inset -5px 0 0px #000; }
 
-        .page-section { display: none; padding: 80px 15px 40px 15px; min-height: 100vh; opacity: 0; transition: opacity 0.4s ease-out; }
-        .page-section.active { display: block; opacity: 1; }
+        .page-section { 
+            display: block; 
+            padding: 80px 15px 40px 15px; 
+            min-height: auto; 
+            opacity: 1; 
+        }
 
         .sec-title { font-size: var(--font-xxl); color: var(--text-light); border-left: 4px solid var(--primary); padding-left: 15px; margin-bottom: 30px; text-shadow: 0 3px 10px rgba(255, 42, 42, 0.5); }
 
@@ -187,11 +138,6 @@
         
         .btn-get-idp { background: #25D366 !important; color: #fff !important; box-shadow: 0 4px 10px rgba(37,211,102,0.3) !important; }
         .btn-get-idp:hover { background: #1ebe57 !important; box-shadow: 0 0 20px rgba(37, 211, 102, 0.8) !important; }
-
-        .user-auth-box { width: 100%; max-width: 400px; margin: 0 auto; background: var(--bg-panel); backdrop-filter: blur(15px); padding: 25px 15px; border: 1px solid var(--primary); border-radius: 8px; box-shadow: 0 8px 30px rgba(255, 42, 42, 0.2); text-align: center; }
-
-        .user-profile-card { text-align: center; background: var(--bg-panel); backdrop-filter: blur(15px); padding: 25px 15px; border: 1px solid var(--primary); border-radius: 8px; max-width: 400px; margin: 20px auto; box-shadow: 0 8px 30px rgba(255, 42, 42, 0.2); }
-        .profile-img { width: 80px; height: 80px; border-radius: 50%; border: 3px solid var(--primary); margin-bottom: 10px; box-shadow: 0 0 15px var(--primary-glow); }
 
         .custom-form-box { background: var(--bg-panel); backdrop-filter: blur(10px); padding: 15px; border: 1px solid var(--border-color); border-radius: 6px; margin-bottom: 20px; box-shadow: 0 5px 20px rgba(0,0,0,0.6); }
         .custom-form-box input, .custom-form-box textarea, .custom-form-box select { width: 100%; padding: 10px; margin-bottom: 12px; background: rgba(0,0,0,0.8); border: 1px solid #444; color: white; font-size: 16px; font-family: 'Montserrat', sans-serif; border-radius: 4px; transition: 0.3s; }
@@ -250,11 +196,6 @@
 </head>
 
 <body>
-    <div id="login-animation">
-        <div class="spinner"></div>
-        <h2 id="login-welcome-text">AUTHENTICATING...</h2>
-    </div>
-
     <canvas id="live-bg"></canvas>
 
     <header>
@@ -266,22 +207,9 @@
             </div>
             <a href="#intro" class="logo nav-link">ALPHA <span>BATTLE</span></a>
         </div>
-        <div class="header-controls">
-            <i class="fa-solid fa-user profile-icon" id="headerProfileIcon" title="View Profile"></i>
-        </div>
     </header>
 
     <!-- Modals -->
-    <div class="modal-overlay" id="profileModal">
-        <div class="modal-content" style="text-align: center;">
-            <span class="close-modal" id="closeProfileModal">&times;</span>
-            <img id="modalProfileImg" src="" alt="Profile Picture" class="profile-img">
-            <h3>ACCOUNT DETAILS</h3>
-            <p style="background: rgba(0,0,0,0.8); padding: 10px; border-left: 3px solid var(--primary); text-align: left; margin-bottom: 10px; font-size: var(--font-sm); word-break: break-all;"><strong>Name:</strong> <span id="modalName">-</span></p>
-            <p style="background: rgba(0,0,0,0.8); padding: 10px; border-left: 3px solid var(--primary); text-align: left; font-size: var(--font-sm); word-break: break-all;"><strong>Email:</strong> <span id="modalEmail">-</span></p>
-        </div>
-    </div>
-
     <div class="modal-overlay" id="editEntryModal">
         <div class="modal-content">
             <span class="close-modal" id="closeEditEntryModal">&times;</span>
@@ -329,18 +257,15 @@
             <p id="regModalDetails" style="margin-bottom: 15px; font-size: var(--font-sm); color: #ccc;"></p>
             <div class="custom-form-box" style="border:none; padding:0; box-shadow:none;">
                 
-                <!-- Solo Input -->
-                <div id="soloIgnContainer" style="display:none; margin-bottom:10px;">
-                    <label style="display:block; margin-bottom:5px; font-size:var(--font-sm); color:var(--primary); font-weight:bold;">Your Exact IGN:</label>
-                    <input type="text" id="regSoloIgn" placeholder="Player Name">
-                </div>
-                
-                <!-- Team/Squad Input -->
-                <div id="teamInputContainer" style="display:none; margin-bottom:10px;">
+                <div id="teamInputContainer" style="margin-bottom:10px;">
                     <label style="display:block; margin-bottom:5px; font-size:var(--font-sm); color:var(--primary); font-weight:bold;">Team Name:</label>
                     <input type="text" id="regSquadTeamName" placeholder="Enter Team Name">
+                    
                     <label style="display:block; margin-top:10px; margin-bottom:5px; font-size:var(--font-sm); color:var(--primary); font-weight:bold;">IGL Name (In-Game):</label>
                     <input type="text" id="regSquadIgl" placeholder="Enter IGL Name">
+                    
+                    <label style="display:block; margin-top:10px; margin-bottom:5px; font-size:var(--font-sm); color:var(--primary); font-weight:bold;">Active WhatsApp Number:</label>
+                    <input type="tel" id="regWhatsapp" placeholder="Enter WhatsApp Number">
                 </div>
 
                 <button id="confirmRegBtn">CONFIRM</button>
@@ -348,67 +273,40 @@
         </div>
     </div>
 
-    <div class="modal-overlay" id="termsModal"><div class="modal-content" style="text-align: left;"><span class="close-modal" id="closeTermsModal">&times;</span><h3>TERMS & PRIVACY</h3><div style="max-height: 250px; overflow-y: auto; font-size: var(--font-sm); line-height: 1.4; color: #ccc;"><p><strong>1. Skill-Based Platform:</strong> ALPHA BATTLE is for competitive gaming matchmaking.</p><br><p><strong>2. Free Scrims & Tours:</strong> All scrims and tournaments are 100% free to participate.</p><br><p><strong>3. Fair Play:</strong> Cheating or hacking leads to instant ban.</p></div></div></div>
+    <div class="modal-overlay" id="termsModal"><div class="modal-content" style="text-align: left;"><span class="close-modal" id="closeTermsModal">&times;</span><h3>TERMS & PRIVACY</h3><div style="max-height: 250px; overflow-y: auto; font-size: var(--font-sm); line-height: 1.4; color: #ccc;"><p><strong>1. Skill-Based Platform:</strong> ALPHA BATTLE is for competitive gaming matchmaking.</p><br><p><strong>2. Free Scrims:</strong> All scrims are 100% free to participate.</p><br><p><strong>3. Fair Play:</strong> Cheating or hacking leads to instant ban.</p></div></div></div>
 
     <div class="modal-overlay" id="idpModal"><div class="modal-content" style="text-align: center;"><span class="close-modal" id="closeIdpModal">&times;</span><h3 style="color: #25D366; text-shadow: 0 0 15px rgba(37,211,102,0.5);">ROOM DETAILS</h3><div style="background: rgba(0,0,0,0.8); padding: 15px; border: 1px solid var(--primary); border-radius: 4px; margin-bottom: 10px;"><p style="font-size: var(--font-md); color: #fff;"><strong>Room ID:</strong> <br><span id="displayRoomId" style="color: var(--primary); font-size: var(--font-xl); font-weight: bold; display:inline-block; margin-top:5px; word-break: break-all;"></span></p></div><div style="background: rgba(0,0,0,0.8); padding: 15px; border: 1px solid var(--primary); border-radius: 4px;"><p style="font-size: var(--font-md); color: #fff;"><strong>Password:</strong> <br><span id="displayRoomPass" style="color: var(--primary); font-size: var(--font-xl); font-weight: bold; display:inline-block; margin-top:5px; word-break: break-all;"></span></p></div><p style="color: #aaa; font-size: var(--font-sm); margin-top: 10px;">Do not share outside your team.</p></div></div>
 
     <div class="modal-overlay" id="adminParticipantsModal"><div class="modal-content"><span class="close-modal" id="closeAdminParticipantsModal">&times;</span><h3 id="adminPartTitle">PLAYERS</h3><div id="adminPartList" style="max-height: 300px; overflow-y: auto; background: rgba(0,0,0,0.5); padding: 10px; border-radius: 4px; border: 1px solid #444;"></div></div></div>
 
-    <!-- Sidebar updated -->
     <div class="sidebar" id="sidebar">
         <a href="#intro" class="nav-link">HOME</a>
         <a href="#scrims" class="nav-link">SCRIMS</a>
-        <a href="#tournaments" class="nav-link">TOURNAMENTS</a>
         <a href="#support" class="nav-link">SUPPORT</a>
-        <a href="#user-auth" class="nav-link">PROFILE</a>
         <a href="#admin" class="nav-link">ADMIN PANEL</a>
     </div>
 
     <main>
-        <!-- Auth -->
-        <section id="user-auth" class="page-section">
-            <div class="auth-header" style="text-align: center; margin-bottom: 20px;">
-                <h1 style="font-size: var(--font-hero); text-shadow: 0 0 20px var(--primary-glow); font-family: 'Bebas Neue', sans-serif;">ALPHA <span style="color: var(--primary);">BATTLE</span></h1>
-                <p style="color: #ccc; font-size: var(--font-sm); margin-top: 5px;">Sign in to access the platform.</p>
-            </div>
-            <div class="user-auth-box" id="authBox">
-                <h2 id="authTitle" style="font-family: 'Bebas Neue', sans-serif; font-size: var(--font-xxl); margin-bottom: 15px; color: var(--primary);">LOGIN</h2>
-                <div class="custom-form-box" style="border:none; padding:0; box-shadow:none; margin-bottom:0;">
-                    <input type="text" id="authDisplayName" placeholder="Gamer Tag" style="display:none;">
-                    <input type="email" id="authEmail" placeholder="Email Address">
-                    <input type="password" id="authPassword" placeholder="Password">
-                    <button id="emailSignInBtn" class="start-btn" style="width: 100%; margin-bottom: 10px;">SIGN IN</button>
-                    <button id="emailSignUpBtn" class="start-btn" style="width: 100%; display:none; margin-bottom: 10px;">REGISTER</button>
-                    <p id="authToggleMsg" style="color:#aaa; font-size:var(--font-lg); font-weight:bold; margin-top:15px; cursor:pointer; text-decoration: underline;">DON'T HAVE AN ACCOUNT? REGISTER</p>
-                </div>
-            </div>
-            <div class="user-profile-card" id="userProfileCard" style="display: none;">
-                <img id="profilePic" src="" alt="Profile Picture" class="profile-img">
-                <h3 style="font-size: var(--font-xxl); color: var(--primary);">PROFILE</h3>
-                <p style="font-size: var(--font-sm); word-break: break-all;"><strong>Name:</strong> <span id="profileName">-</span></p>
-                <p style="font-size: var(--font-sm); word-break: break-all;"><strong>Email:</strong> <span id="profileEmailCard">-</span></p>
-                <button class="start-btn" id="userLogoutBtn" style="margin-top: 15px; width: 100%; background: #c0392b; color: #fff;">LOGOUT</button>
-            </div>
-        </section>
-
-        <!-- Intro / Home Page updated -->
+        <!-- Home / Intro Page -->
         <section id="intro" class="page-section">
             <h1>ALPHA <span style="color: var(--primary);">BATTLE</span></h1>
-            <p>Pakistan's Premier Platform for Free Competitive Scrims and Tournaments. Prove your team's worth!</p>
+            <p>Pakistan's Premier Platform for Free Competitive Scrims. Prove your team's worth!</p>
             <a href="#scrims" class="start-btn nav-link">ENTER ARENA</a>
         </section>
 
-        <!-- Dynamic Sections -->
-        <section id="scrims" class="page-section"><h2 class="sec-title">Free Scrims</h2><div class="grid-container" id="scrims-list"></div></section>
-        <section id="tournaments" class="page-section"><h2 class="sec-title">Free Tournaments</h2><div class="grid-container" id="tours-list"></div></section>
+        <!-- Scrims Section -->
+        <section id="scrims" class="page-section">
+            <h2 class="sec-title">Free Scrims</h2>
+            <div class="grid-container" id="scrims-list"></div>
+        </section>
 
-        <!-- Support -->
+        <!-- Support Section -->
         <section id="support" class="page-section">
             <h2 class="sec-title">Support</h2>
             <div class="custom-form-box" style="max-width: 500px; margin: 0 auto; text-align: center;">
                 <i class="fa-brands fa-whatsapp" style="font-size: 4rem; color: #25D366; margin-bottom: 15px;"></i>
                 <h3 style="font-size: var(--font-xxl); margin-bottom: 5px; color: white;">24/7 WHATSAPP SUPPORT</h3>
-                <p style="color: #ccc; margin-bottom: 10px; font-size: var(--font-sm);">Questions regarding scrims or tournament slots? Chat with us directly.</p>
+                <p style="color: #ccc; margin-bottom: 10px; font-size: var(--font-sm);">Questions regarding scrim slots? Chat with us directly.</p>
                 <h4 style="color: #25D366; font-size: var(--font-xl); margin-bottom: 15px; font-family: 'Montserrat', sans-serif;">+92 318 2691180</h4>
                 <a href="https://wa.me/923182691180" target="_blank" class="start-btn" style="background: #25D366; color:#fff; width: 100%; font-size:var(--font-md);">WHATSAPP CHAT</a>
             </div>
@@ -451,36 +349,10 @@
                         </select>
                         <button class="action-btn" data-type="scrim">PUBLISH SCRIM</button>
                     </div>
-
-                    <div class="custom-form-box">
-                        <h4>Add Tournament</h4>
-                        <input type="text" id="tourTitle" placeholder="Title">
-                        <textarea id="tourDetails" placeholder="Details" rows="2"></textarea>
-                        <select id="tourFormat">
-                            <option value="Team">Team (12 Slots)</option>
-                            <option value="Solo">Solo (48 Slots)</option>
-                            <option value="CS 1v1">CS 1v1 (2 Slots)</option>
-                            <option value="CS 2v2">CS 2v2 (2 Slots)</option>
-                            <option value="CS 3v3">CS 3v3 (2 Slots)</option>
-                            <option value="CS 4v4">CS 4v4 (2 Slots)</option>
-                            <option value="Craftland M590 Solo">Craftland M590 Solo (6 Slots)</option>
-                            <option value="Craftland M590 Duo">Craftland M590 Duo (6 Slots)</option>
-                            <option value="Lone Wolf 1v1">Lone Wolf 1v1 (2 Slots)</option>
-                            <option value="Lone Wolf 2v2">Lone Wolf 2v2 (2 Slots)</option>
-                        </select>
-                        <input type="text" id="tourIdpTime" placeholder="IDP Time">
-                        <select id="tourStatus">
-                            <option value="Upcoming">1. Upcoming</option>
-                            <option value="On Going">2. On Going</option>
-                            <option value="Completed">3. Completed</option>
-                            <option value="Ended">4. Ended</option>
-                        </select>
-                        <button class="action-btn" data-type="tour">PUBLISH TOURNAMENT</button>
-                    </div>
                 </div>
 
                 <div class="admin-management-container">
-                    <h3 style="color: var(--primary); font-size: var(--font-lg); margin-bottom: 10px;">Manage Scrims & Tournaments</h3>
+                    <h3 style="color: var(--primary); font-size: var(--font-lg); margin-bottom: 10px;">Manage Scrims</h3>
                     <div id="admin-manage-list"></div>
                 </div>
             </div>
@@ -495,7 +367,6 @@
     <!-- FIREBASE SCRIPT -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
-        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut, updateProfile } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
         import { getFirestore, collection, addDoc, onSnapshot, doc, updateDoc, deleteDoc, setDoc, getDoc, runTransaction, query, where, serverTimestamp, getDocs } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
         const firebaseConfig = {
@@ -507,37 +378,46 @@
           appId: "1:285422815510:web:564c163d2c68af9ba92837",
           measurementId: "G-W68SXCSRVP"
         };
+        
         const app = initializeApp(firebaseConfig); 
-        const auth = getAuth(app); 
         const db = getFirestore(app);
 
         function escapeHTML(str) { return str ? String(str).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','\'':'&#039;'}[m])) : ''; }
 
-        let siteEntries = [], userRegistrations = [], selectedEventForReg = null;
+        let siteEntries = [], selectedEventForReg = null;
 
         document.addEventListener('DOMContentLoaded', () => {
 
             function showModal(modalId) { const m = document.getElementById(modalId); m.style.display='flex'; void m.offsetWidth; m.classList.add('active'); }
             function hideModal(modalId) { const m = document.getElementById(modalId); m.classList.remove('active'); setTimeout(() => m.style.display='none', 300); }
 
-            ['closeProfileModal','closeRegModal','closeIdpModal','closeAdminParticipantsModal','closeEditEntryModal','closeTermsModal'].forEach(id => {
+            ['closeIdpModal','closeAdminParticipantsModal','closeEditEntryModal','closeTermsModal','closeRegModal'].forEach(id => {
                 document.getElementById(id).addEventListener('click', () => hideModal(id.replace('close','').charAt(0).toLowerCase() + id.replace('close','').slice(1)));
             });
             document.getElementById('openTermsLink').addEventListener('click', (e) => { e.preventDefault(); showModal('termsModal'); });
 
-            onSnapshot(collection(db, 'entries'), (snapshot) => { siteEntries = []; snapshot.forEach(doc => siteEntries.push({ id: doc.id, ...doc.data() })); renderAllEntries(); });
+            onSnapshot(collection(db, 'entries'), (snapshot) => { 
+                siteEntries = []; 
+                snapshot.forEach(doc => siteEntries.push({ id: doc.id, ...doc.data() })); 
+                renderAllEntries(); 
+            });
 
             function renderAllEntries() {
-                ['scrims-list','tours-list','admin-manage-list'].forEach(id => {
-                    const el = document.getElementById(id);
-                    if(el) el.innerHTML = '';
-                });
+                const scrimsList = document.getElementById('scrims-list');
+                const adminList = document.getElementById('admin-manage-list');
+                if (scrimsList) scrimsList.innerHTML = '';
+                if (adminList) adminList.innerHTML = '';
+
+                // Get joined events from local storage to verify participation locally
+                const joinedEvents = JSON.parse(localStorage.getItem('joinedEvents') || '[]');
 
                 siteEntries.forEach(entry => {
+                    if (entry.type !== 'scrim') return; // Strictly only render scrims
+
                     const bgClass = 'bg-' + escapeHTML(entry.status || '').toLowerCase().replace(' ', '');
-                    const hasJoined = userRegistrations.includes(entry.id);
+                    const hasJoined = joinedEvents.includes(entry.id);
                     
-                    let maxSlots = 12; // Default for "Team" format
+                    let maxSlots = 12; // Default for Team Format
                     if (entry.format === 'Solo') maxSlots = 48;
                     else if (entry.format?.startsWith('CS') || entry.format?.startsWith('Lone Wolf')) maxSlots = 2;
                     else if (entry.format?.startsWith('Craftland')) maxSlots = 6;
@@ -559,7 +439,8 @@
                     } else if (entry.status === 'Ended') {
                         actionBtnHtml = ''; 
                     } else {
-                        let btnText = hasJoined ? 'GET IDP' : (isFull ? 'FULL' : 'FREE JOIN');
+                        // Using slots are full text directly per instructions
+                        let btnText = hasJoined ? 'GET IDP' : (isFull ? 'SLOTS ARE FULL NOW' : 'FREE JOIN');
                         let dis = (isFull && !hasJoined) ? 'disabled style="background:#444; color:#888;"' : '';
                         actionBtnHtml = `<button class="action-card-btn ${hasJoined?'btn-get-idp':''}" data-id="${entry.id}" ${dis}>${btnText}</button>`;
                     }
@@ -569,31 +450,25 @@
                     const actionBtnElement = newCard.querySelector('button.action-card-btn');
                     if(actionBtnElement) {
                         actionBtnElement.addEventListener('click', (e) => {
-                            if(!auth.currentUser) return alert("Login required!");
-                            if(hasJoined){ 
+                            if(hasJoined) { 
                                 if(entry.roomId){ document.getElementById('displayRoomId').innerText=entry.roomId; document.getElementById('displayRoomPass').innerText=entry.roomPass; showModal('idpModal'); }
                                 else alert(`IDP will be given at: ${entry.idpTime||'shortly'}`);
                             } else {
                                 if(entry.status!=='Upcoming'&&entry.status!=='Available') return alert("Registration Closed.");
-                                if(isFull) return alert("Slots Full!");
-                                selectedEventForReg = entry; document.getElementById('regModalTitle').innerText=`JOIN ${entry.title}`;
-                                document.getElementById('regModalDetails').innerHTML=`Entry Fee: <strong style="color:var(--primary);">FREE</strong>`;
+                                if(isFull) return alert("Slots are full now"); // Alert matches UI
                                 
-                                const isSoloFormat = ['Solo', 'CS 1v1', 'Craftland M590 Solo', 'Lone Wolf 1v1'].includes(entry.format);
-                                document.getElementById('teamInputContainer').style.display = !isSoloFormat ? 'block' : 'none';
-                                document.getElementById('soloIgnContainer').style.display = isSoloFormat ? 'block' : 'none';
+                                selectedEventForReg = entry; 
+                                document.getElementById('regModalTitle').innerText=`JOIN ${entry.title}`;
+                                document.getElementById('regModalDetails').innerHTML=`Entry Fee: <strong style="color:var(--primary);">FREE</strong>`;
                                 
                                 showModal('regModal');
                             }
                         });
                     }
 
-                    if(entry.type==='scrim') {
-                        document.getElementById('scrims-list').appendChild(newCard);
-                    } else if(entry.type==='tour') {
-                        document.getElementById('tours-list').appendChild(newCard);
-                    }
+                    document.getElementById('scrims-list').appendChild(newCard);
 
+                    // Admin Row Generation
                     const aRow = document.createElement('div'); aRow.classList.add('list-item-row');
                     let optH = `<option value="Upcoming" ${entry.status==='Upcoming'?'selected':''}>1. Upcoming</option><option value="On Going" ${entry.status==='On Going'?'selected':''}>2. On Going</option><option value="Completed" ${entry.status==='Completed'?'selected':''}>3. Completed</option><option value="Ended" ${entry.status==='Ended'?'selected':''}>4. Ended</option>`;
                     let idpH = `<div class="idp-controls"><input type="text" class="room-id-input" placeholder="Room ID" value="${escapeHTML(entry.roomId||'')}"><input type="text" class="room-pass-input" placeholder="Pass" value="${escapeHTML(entry.roomPass||'')}"><button class="btn-success update-idp-btn" data-id="${entry.id}">Set IDP</button><button class="btn-primary view-participants-btn" data-id="${entry.id}">Players</button></div>`;
@@ -613,22 +488,28 @@
                     });
                     
                     aRow.querySelector('.view-participants-btn')?.addEventListener('click', async(e)=>{
-                        document.getElementById('adminPartTitle').innerText=`${entry.title} Players`; showModal('adminParticipantsModal'); const list=document.getElementById('adminPartList'); list.innerHTML='Loading...';
-                        try{ const snap=await getDocs(query(collection(db,'registrations'),where('eventId','==',e.target.dataset.id))); list.innerHTML=''; if(snap.empty){ list.innerHTML='No players registered yet.'; return; }
-                            let h='<table border="1" bordercolor="#444"><tr><th style="color:var(--primary)">Name/IGN</th><th style="color:var(--primary)">Email</th></tr>';
-                            snap.forEach(d=>{ 
-                                const dt=d.data(); 
-                                const isSoloFmt = ['Solo', 'CS 1v1', 'Craftland M590 Solo', 'Lone Wolf 1v1'].includes(dt.format);
-                                let displayNames = "";
-                                if (!isSoloFmt) {
-                                    displayNames = `<span style="color:#fff; font-weight:bold;">${escapeHTML(dt.teamName)}</span><br><span style="font-size:11px; color:#ccc;">IGL: ${escapeHTML(dt.iglName)}</span>`;
-                                } else {
-                                    displayNames = `<span style="color:#fff;">${escapeHTML(dt.soloIgn || dt.teamName)}</span>`;
-                                }
-                                h+=`<tr><td>${displayNames}</td><td style="color:#25D366; font-size:12px; font-weight:bold;">${escapeHTML(dt.userName||dt.email||dt.uid)}</td></tr>`; 
+                        document.getElementById('adminPartTitle').innerText=`${entry.title} Players`; 
+                        showModal('adminParticipantsModal'); 
+                        const list=document.getElementById('adminPartList'); 
+                        list.innerHTML='Loading...';
+                        
+                        try { 
+                            const snap = await getDocs(query(collection(db,'registrations'), where('eventId','==',e.target.dataset.id))); 
+                            list.innerHTML=''; 
+                            if(snap.empty) { list.innerHTML='No players registered yet.'; return; }
+                            
+                            // Displays strictly Team, IGL, and WhatsApp as requested
+                            let h = '<table border="1" bordercolor="#444" style="width:100%;"><tr><th style="color:var(--primary)">Team Name</th><th style="color:var(--primary)">IGL Name</th><th style="color:var(--primary)">WhatsApp</th></tr>';
+                            snap.forEach(d => { 
+                                const dt = d.data(); 
+                                h += `<tr>
+                                    <td><span style="color:#fff; font-weight:bold;">${escapeHTML(dt.teamName)}</span></td>
+                                    <td><span style="color:#ccc;">${escapeHTML(dt.iglName)}</span></td>
+                                    <td style="color:#25D366; font-size:12px; font-weight:bold;">${escapeHTML(dt.whatsapp)}</td>
+                                </tr>`; 
                             }); 
-                            list.innerHTML=h+'</table>';
-                        }catch(err){ list.innerHTML='Error loading participants.'; }
+                            list.innerHTML = h + '</table>';
+                        } catch(err) { list.innerHTML='Error loading participants.'; }
                     });
                     
                     aRow.querySelector('.update-idp-btn')?.addEventListener('click', async(e)=>{
@@ -645,89 +526,106 @@
                 await updateDoc(doc(db,'entries',id), up); hideModal('editEntryModal');
             });
 
+            // Bug fix regarding concurrency during slots filling
             document.getElementById('confirmRegBtn').addEventListener('click', async(e) => {
                 if(!selectedEventForReg) return; 
-                let tNm="", igl="", sIgn=null;
                 
-                const isSoloReg = ['Solo', 'CS 1v1', 'Craftland M590 Solo', 'Lone Wolf 1v1'].includes(selectedEventForReg.format);
-                
-                if(!isSoloReg) { 
-                    tNm = document.getElementById('regSquadTeamName').value.trim(); 
-                    igl = document.getElementById('regSquadIgl').value.trim();
-                    if(!tNm || !igl) return alert("Please enter both Team Name and IGL Name."); 
-                } else { 
-                    sIgn=document.getElementById('regSoloIgn').value.trim(); 
-                    if(!sIgn) return alert("Enter your IGN."); 
-                }
+                const tNm = document.getElementById('regSquadTeamName').value.trim(); 
+                const igl = document.getElementById('regSquadIgl').value.trim();
+                const wa = document.getElementById('regWhatsapp').value.trim();
+
+                if(!tNm || !igl || !wa) return alert("Please fill in Team Name, IGL Name, and WhatsApp number."); 
                 
                 e.target.disabled=true;
                 
-                try{ await runTransaction(db, async(t)=>{
-                    const eR=doc(db,'entries',selectedEventForReg.id), eD=await t.get(eR), curJ=eD.data().joinedCount||0;
+                try { 
+                    await runTransaction(db, async (t) => {
+                        const eR = doc(db, 'entries', selectedEventForReg.id); 
+                        const eD = await t.get(eR); 
+                        const curJ = eD.data().joinedCount || 0;
+                        
+                        let max = 12;
+                        if(selectedEventForReg.format === 'Solo') max = 48;
+                        else if(selectedEventForReg.format?.startsWith('CS') || selectedEventForReg.format?.startsWith('Lone Wolf')) max = 2;
+                        else if(selectedEventForReg.format?.startsWith('Craftland')) max = 6;
+                        
+                        // Strict check verifying slots inside the isolated transaction thread
+                        if(curJ >= max) throw new Error("Slots are full now");
+                        
+                        t.update(eR, { joinedCount: curJ + 1 });
+                        t.set(doc(collection(db, 'registrations')), {
+                            eventId: selectedEventForReg.id, 
+                            teamName: tNm, 
+                            iglName: igl, 
+                            whatsapp: wa, 
+                            format: selectedEventForReg.format || 'Team', 
+                            createdAt: serverTimestamp()
+                        });
+                    }); 
                     
-                    let max = 12;
-                    if(selectedEventForReg.format === 'Solo') max = 48;
-                    else if(selectedEventForReg.format?.startsWith('CS') || selectedEventForReg.format?.startsWith('Lone Wolf')) max = 2;
-                    else if(selectedEventForReg.format?.startsWith('Craftland')) max = 6;
+                    // Mark as joined locally to alter layout state without auth requirement
+                    let joinedEvents = JSON.parse(localStorage.getItem('joinedEvents') || '[]');
+                    if (!joinedEvents.includes(selectedEventForReg.id)) {
+                        joinedEvents.push(selectedEventForReg.id);
+                        localStorage.setItem('joinedEvents', JSON.stringify(joinedEvents));
+                    }
                     
-                    if(curJ>=max) throw "Event is already full!";
-                    
-                    t.update(eR,{joinedCount:curJ+1});
-                    t.set(doc(collection(db,'registrations')),{eventId:selectedEventForReg.id, uid:auth.currentUser.uid, userName:auth.currentUser.email, teamName:tNm, iglName:igl, soloIgn:sIgn, format:selectedEventForReg.format||'Team', createdAt:serverTimestamp()});
-                }); alert("Registered successfully!"); hideModal('regModal'); } catch(err){ alert("Registration Failed: "+err); } finally { e.target.disabled=false; }
-            });
+                    alert("Registered successfully!"); 
+                    hideModal('regModal'); 
 
-            const mobileMenu = document.getElementById('mobile-menu'), sidebar = document.getElementById('sidebar'), secs = document.querySelectorAll('.page-section');
-            mobileMenu.addEventListener('click', () => { mobileMenu.classList.toggle('active'); sidebar.classList.toggle('active'); });
-            document.querySelectorAll('.nav-link').forEach(l => l.addEventListener('click', e => {
-                e.preventDefault(); const tId = l.getAttribute('href').substring(1);
-                secs.forEach(s => { s.style.display='none'; s.classList.remove('active'); });
-                const tS = document.getElementById(tId); if(tS) { tS.style.display=tId==='intro'?'flex':'block'; setTimeout(()=>tS.classList.add('active'),10); }
-                mobileMenu.classList.remove('active'); sidebar.classList.remove('active'); window.scrollTo(0,0);
-            }));
-
-            let isSignUp = false;
-            document.getElementById('authToggleMsg').addEventListener('click', () => {
-                isSignUp=!isSignUp; document.getElementById('authTitle').innerText=isSignUp?"REGISTER":"LOGIN";
-                document.getElementById('authDisplayName').style.display=isSignUp?'block':'none';
-                document.getElementById('emailSignInBtn').style.display=isSignUp?'none':'block';
-                document.getElementById('emailSignUpBtn').style.display=isSignUp?'block':'none';
-                document.getElementById('authToggleMsg').innerText=isSignUp?"ALREADY HAVE AN ACCOUNT? LOGIN":"DON'T HAVE AN ACCOUNT? REGISTER";
-            });
-            document.getElementById('emailSignInBtn').addEventListener('click', async(e)=>{ e.target.disabled=true; try{await signInWithEmailAndPassword(auth,document.getElementById('authEmail').value,document.getElementById('authPassword').value);}catch(err){alert(err.message);} finally{e.target.disabled=false;} });
-            document.getElementById('emailSignUpBtn').addEventListener('click', async(e)=>{ e.target.disabled=true; try{const res=await createUserWithEmailAndPassword(auth,document.getElementById('authEmail').value,document.getElementById('authPassword').value); await updateProfile(res.user,{displayName:document.getElementById('authDisplayName').value});}catch(err){alert(err.message);} finally{e.target.disabled=false;} });
-
-            let rSub;
-            async function initUser(user) {
-                const uRef=doc(db,'users',user.uid); const uDoc=await getDoc(uRef); if(!uDoc.exists()) await setDoc(uRef,{email:user.email, createdAt:serverTimestamp()});
-                rSub=onSnapshot(query(collection(db,'registrations'),where('uid','==',user.uid)), s=>{ userRegistrations=[]; s.forEach(d=>userRegistrations.push(d.data().eventId)); renderAllEntries(); });
-            }
-
-            window.updateUserUI = function(user) {
-                if(user) {
-                    document.body.classList.add('logged-in'); document.getElementById('headerProfileIcon').style.display='block'; document.getElementById('authBox').style.display='none'; document.getElementById('userProfileCard').style.display='block';
-                    document.getElementById('profileName').innerText=user.displayName||'Player'; document.getElementById('profileEmailCard').innerText=user.email; initUser(user);
-                    document.querySelectorAll('.page-section').forEach(s=>{s.style.display='none';s.classList.remove('active');});
-                    document.getElementById('login-animation').style.display='flex'; setTimeout(()=>{document.getElementById('login-animation').style.display='none'; document.getElementById('intro').style.display='flex'; setTimeout(()=>document.getElementById('intro').classList.add('active'),10);}, 1500);
-                } else {
-                    document.body.classList.remove('logged-in'); document.getElementById('headerProfileIcon').style.display='none'; document.getElementById('authBox').style.display='block'; document.getElementById('userProfileCard').style.display='none';
-                    if(rSub)rSub(); userRegistrations=[];
-                    document.querySelectorAll('.page-section').forEach(s=>{s.style.display='none';s.classList.remove('active');}); const aS=document.getElementById('user-auth'); aS.style.display='flex'; setTimeout(()=>aS.classList.add('active'),10);
+                } catch (err) { 
+                    alert(err.message || "Slots are full now"); 
+                } finally { 
+                    e.target.disabled = false; 
                 }
-            }
+            });
 
-            onAuthStateChanged(auth, user => updateUserUI(user));
-            document.getElementById('userLogoutBtn').addEventListener('click', ()=>signOut(auth));
-            document.getElementById('headerProfileIcon').addEventListener('click', ()=>{ const u=auth.currentUser; if(u){ document.getElementById('modalName').innerText=u.displayName||'Player'; document.getElementById('modalEmail').innerText=u.email; showModal('profileModal'); }});
-
-            document.getElementById('loginBtn').addEventListener('click',()=>{ const p=document.getElementById('adminPass').value; if(p === 'admin123'){document.getElementById('admin-login-screen').style.display='none'; document.getElementById('admin-dashboard-screen').style.display='block';}else document.getElementById('adminError').style.display='block'; });
+            // Smooth scrolling linking logic modified to keep all sections inline
+            const mobileMenu = document.getElementById('mobile-menu'), sidebar = document.getElementById('sidebar');
+            mobileMenu.addEventListener('click', () => { mobileMenu.classList.toggle('active'); sidebar.classList.toggle('active'); });
             
-            document.querySelectorAll('.action-btn').forEach(btn=>btn.addEventListener('click',async()=>{
-                const ty=btn.dataset.type, t=document.getElementById(ty+'Title').value, d=document.getElementById(ty+'Details').value, s=document.getElementById(ty+'Status').value;
-                const f=document.getElementById(ty+'Format').value, idp=document.getElementById(ty+'IdpTime').value;
-                if(!t||!d)return alert("Fill title and details."); btn.disabled=true; await addDoc(collection(db,'entries'),{type:ty,title:t,details:d,status:s,format:f,idpTime:idp,roomId:"",roomPass:"",joinedCount:0}); alert("Published!"); btn.disabled=false; document.getElementById(ty+'Title').value=''; document.getElementById(ty+'Details').value='';
+            document.querySelectorAll('.nav-link').forEach(l => l.addEventListener('click', e => {
+                e.preventDefault(); 
+                const tId = l.getAttribute('href').substring(1);
+                const targetElement = document.getElementById(tId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({ behavior: 'smooth' });
+                }
+                mobileMenu.classList.remove('active'); 
+                sidebar.classList.remove('active'); 
             }));
 
+            // Admin Logic
+            document.getElementById('loginBtn').addEventListener('click', () => { 
+                const p = document.getElementById('adminPass').value; 
+                if(p === 'admin123') {
+                    document.getElementById('admin-login-screen').style.display='none'; 
+                    document.getElementById('admin-dashboard-screen').style.display='block';
+                } else {
+                    document.getElementById('adminError').style.display='block'; 
+                }
+            });
+            
+            // Re-use logic for saving new scrim entries
+            document.querySelectorAll('.action-btn').forEach(btn => btn.addEventListener('click', async () => {
+                const ty = btn.dataset.type;
+                const t = document.getElementById(ty+'Title').value;
+                const d = document.getElementById(ty+'Details').value;
+                const s = document.getElementById(ty+'Status').value;
+                const f = document.getElementById(ty+'Format').value;
+                const idp = document.getElementById(ty+'IdpTime').value;
+                
+                if(!t || !d) return alert("Fill title and details."); 
+                
+                btn.disabled = true; 
+                await addDoc(collection(db,'entries'), {type:ty, title:t, details:d, status:s, format:f, idpTime:idp, roomId:"", roomPass:"", joinedCount:0}); 
+                alert("Published!"); 
+                btn.disabled = false; 
+                document.getElementById(ty+'Title').value = ''; 
+                document.getElementById(ty+'Details').value = '';
+            }));
+
+            // Background Animation
             const cvs = document.getElementById('live-bg'), cx = cvs.getContext('2d'); let w,h,pts=[];
             function initC(){ w=cvs.width=window.innerWidth; h=cvs.height=window.innerHeight; pts=[]; for(let i=0;i<50;i++)pts.push({x:Math.random()*w,y:Math.random()*h,s:Math.random()*2+1,vx:Math.random()*1-0.5,vy:Math.random()*1-0.5}); }
             function animC(){ cx.clearRect(0,0,w,h); pts.forEach(p=>{cx.beginPath();cx.arc(p.x,p.y,p.s,0,Math.PI*2);cx.fillStyle='rgba(255, 42, 42, 0.3)';cx.fill();p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>w)p.vx*=-1;if(p.y<0||p.y>h)p.vy*=-1;}); requestAnimationFrame(animC); }

@@ -379,7 +379,7 @@
                     <input type="password" id="authPassword" placeholder="Password">
                     <button id="emailSignInBtn" class="start-btn" style="width: 100%; margin-bottom: 10px;">SIGN IN</button>
                     <button id="emailSignUpBtn" class="start-btn" style="width: 100%; display:none; margin-bottom: 10px;">REGISTER</button>
-                    <p id="authToggleMsg" style="color:#aaa; font-size:var(--font-sm); margin-top:10px; cursor:pointer; text-decoration: underline;">Need an account? Register</p>
+                    <p id="authToggleMsg" style="color:#aaa; font-size:var(--font-lg); font-weight:bold; margin-top:15px; cursor:pointer; text-decoration: underline;">DON'T HAVE AN ACCOUNT? REGISTER</p>
                 </div>
             </div>
             <div class="user-profile-card" id="userProfileCard" style="display: none;">
@@ -408,8 +408,9 @@
             <div class="custom-form-box" style="max-width: 500px; margin: 0 auto; text-align: center;">
                 <i class="fa-brands fa-whatsapp" style="font-size: 4rem; color: #25D366; margin-bottom: 15px;"></i>
                 <h3 style="font-size: var(--font-xxl); margin-bottom: 5px; color: white;">24/7 WHATSAPP SUPPORT</h3>
-                <p style="color: #ccc; margin-bottom: 15px; font-size: var(--font-sm);">Questions regarding scrims or tournament slots? Join our channel or chat with us.</p>
-                <a href="https://whatsapp.com/channel/0029VbD6z3S002T2x3xedf2z" target="_blank" class="start-btn" style="background: #25D366; color:#fff; width: 100%; font-size:var(--font-md);">WHATSAPP CHANNEL</a>
+                <p style="color: #ccc; margin-bottom: 10px; font-size: var(--font-sm);">Questions regarding scrims or tournament slots? Chat with us directly.</p>
+                <h4 style="color: #25D366; font-size: var(--font-xl); margin-bottom: 15px; font-family: 'Montserrat', sans-serif;">+92 318 2691180</h4>
+                <a href="https://wa.me/923182691180" target="_blank" class="start-btn" style="background: #25D366; color:#fff; width: 100%; font-size:var(--font-md);">WHATSAPP CHAT</a>
             </div>
         </section>
 
@@ -691,7 +692,7 @@
                 document.getElementById('authDisplayName').style.display=isSignUp?'block':'none';
                 document.getElementById('emailSignInBtn').style.display=isSignUp?'none':'block';
                 document.getElementById('emailSignUpBtn').style.display=isSignUp?'block':'none';
-                document.getElementById('authToggleMsg').innerText=isSignUp?"Already have an account? Login":"Need an account? Register";
+                document.getElementById('authToggleMsg').innerText=isSignUp?"ALREADY HAVE AN ACCOUNT? LOGIN":"DON'T HAVE AN ACCOUNT? REGISTER";
             });
             document.getElementById('emailSignInBtn').addEventListener('click', async(e)=>{ e.target.disabled=true; try{await signInWithEmailAndPassword(auth,document.getElementById('authEmail').value,document.getElementById('authPassword').value);}catch(err){alert(err.message);} finally{e.target.disabled=false;} });
             document.getElementById('emailSignUpBtn').addEventListener('click', async(e)=>{ e.target.disabled=true; try{const res=await createUserWithEmailAndPassword(auth,document.getElementById('authEmail').value,document.getElementById('authPassword').value); await updateProfile(res.user,{displayName:document.getElementById('authDisplayName').value});}catch(err){alert(err.message);} finally{e.target.disabled=false;} });

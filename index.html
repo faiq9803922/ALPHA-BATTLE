@@ -229,7 +229,7 @@
         .idp-controls input { width: 100%; padding: 8px; background: #111; color: white; border: 1px solid #555; border-radius: 3px; font-family: 'Montserrat', sans-serif; font-size: 16px;}
 
         table { width: 100%; border-collapse: collapse; table-layout: fixed; }
-        td, th { word-wrap: break-word; overflow-wrap: break-word; font-size: var(--font-sm); padding: 6px;}
+        td, th { word-wrap: break-word; overflow-wrap: break-word; font-size: var(--font-sm); padding: 6px; text-align: left; }
 
         footer {
             background: rgba(5, 5, 5, 0.95);
@@ -271,7 +271,7 @@
         </div>
     </header>
 
-    <!-- Modals (Hidden structure unchanged from original) -->
+    <!-- Modals -->
     <div class="modal-overlay" id="profileModal">
         <div class="modal-content" style="text-align: center;">
             <span class="close-modal" id="closeProfileModal">&times;</span>
@@ -282,9 +282,7 @@
         </div>
     </div>
 
-    <!-- Redacted repetitive modal blocks for brevity but they function identically -->
     <div class="modal-overlay" id="editEntryModal">
-        <!-- Kept exactly as provided in alpha battle.txt -->
         <div class="modal-content">
             <span class="close-modal" id="closeEditEntryModal">&times;</span>
             <h3 id="editModalTitle">EDIT ENTRY</h3>
@@ -323,8 +321,32 @@
         </div>
     </div>
 
-    <!-- Other Modals (Registration, Terms, IDP) remain fully intact -->
-    <div class="modal-overlay" id="regModal"><div class="modal-content"><span class="close-modal" id="closeRegModal">&times;</span><h3 id="regModalTitle">JOIN EVENT</h3><p id="regModalDetails" style="margin-bottom: 15px; font-size: var(--font-sm); color: #ccc;"></p><div class="custom-form-box" style="border:none; padding:0; box-shadow:none;"><div id="soloIgnContainer" style="display:none; margin-bottom:10px;"><label style="display:block; margin-bottom:5px; font-size:var(--font-sm); color:var(--primary); font-weight:bold;">Your Exact IGN:</label><input type="text" id="regSoloIgn" placeholder="Player Name"></div><div id="teamSelectContainer" style="display:none; margin-bottom:10px;"><label style="display:block; margin-bottom:5px; font-size:var(--font-sm); color:var(--primary); font-weight:bold;">Select Team:</label><select id="regTeamSelect"></select></div><button id="confirmRegBtn">CONFIRM</button></div></div></div>
+    <!-- Modified Registration Modal -->
+    <div class="modal-overlay" id="regModal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeRegModal">&times;</span>
+            <h3 id="regModalTitle">JOIN EVENT</h3>
+            <p id="regModalDetails" style="margin-bottom: 15px; font-size: var(--font-sm); color: #ccc;"></p>
+            <div class="custom-form-box" style="border:none; padding:0; box-shadow:none;">
+                
+                <!-- Solo Input -->
+                <div id="soloIgnContainer" style="display:none; margin-bottom:10px;">
+                    <label style="display:block; margin-bottom:5px; font-size:var(--font-sm); color:var(--primary); font-weight:bold;">Your Exact IGN:</label>
+                    <input type="text" id="regSoloIgn" placeholder="Player Name">
+                </div>
+                
+                <!-- Team/Squad Input -->
+                <div id="teamInputContainer" style="display:none; margin-bottom:10px;">
+                    <label style="display:block; margin-bottom:5px; font-size:var(--font-sm); color:var(--primary); font-weight:bold;">Team Name:</label>
+                    <input type="text" id="regSquadTeamName" placeholder="Enter Team Name">
+                    <label style="display:block; margin-top:10px; margin-bottom:5px; font-size:var(--font-sm); color:var(--primary); font-weight:bold;">IGL Name (In-Game):</label>
+                    <input type="text" id="regSquadIgl" placeholder="Enter IGL Name">
+                </div>
+
+                <button id="confirmRegBtn">CONFIRM</button>
+            </div>
+        </div>
+    </div>
 
     <div class="modal-overlay" id="termsModal"><div class="modal-content" style="text-align: left;"><span class="close-modal" id="closeTermsModal">&times;</span><h3>TERMS & PRIVACY</h3><div style="max-height: 250px; overflow-y: auto; font-size: var(--font-sm); line-height: 1.4; color: #ccc;"><p><strong>1. Skill-Based Platform:</strong> ALPHA BATTLE is for competitive gaming matchmaking.</p><br><p><strong>2. Free Scrims & Tours:</strong> All scrims and tournaments are 100% free to participate.</p><br><p><strong>3. Fair Play:</strong> Cheating or hacking leads to instant ban.</p></div></div></div>
 
@@ -332,12 +354,11 @@
 
     <div class="modal-overlay" id="adminParticipantsModal"><div class="modal-content"><span class="close-modal" id="closeAdminParticipantsModal">&times;</span><h3 id="adminPartTitle">PLAYERS</h3><div id="adminPartList" style="max-height: 300px; overflow-y: auto; background: rgba(0,0,0,0.5); padding: 10px; border-radius: 4px; border: 1px solid #444;"></div></div></div>
 
-    <!-- Sidebar -->
+    <!-- Sidebar updated -->
     <div class="sidebar" id="sidebar">
         <a href="#intro" class="nav-link">HOME</a>
         <a href="#scrims" class="nav-link">SCRIMS</a>
         <a href="#tournaments" class="nav-link">TOURNAMENTS</a>
-        <a href="#teams" class="nav-link">MY TEAMS</a>
         <a href="#support" class="nav-link">SUPPORT</a>
         <a href="#user-auth" class="nav-link">PROFILE</a>
         <a href="#admin" class="nav-link">ADMIN PANEL</a>
@@ -370,47 +391,16 @@
             </div>
         </section>
 
-        <!-- Intro / Home Page with Added Dashboard -->
+        <!-- Intro / Home Page updated -->
         <section id="intro" class="page-section">
             <h1>ALPHA <span style="color: var(--primary);">BATTLE</span></h1>
             <p>Pakistan's Premier Platform for Free Competitive Scrims and Tournaments. Prove your team's worth!</p>
             <a href="#scrims" class="start-btn nav-link">ENTER ARENA</a>
-            
-            <!-- Added quick link dashboard for scrims -->
-            <div style="margin-top: 40px; display: flex; gap: 20px; flex-wrap: wrap; justify-content: center;">
-                <div class="custom-form-box" style="text-align: center; max-width: 220px; padding: 25px; cursor: pointer; transition: 0.3s; box-shadow: 0 4px 15px rgba(255, 42, 42, 0.2);" onclick="document.querySelector('a[href=\'#scrims\']').click()" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
-                    <h3 style="color: var(--primary); font-size: var(--font-xl); margin-bottom: 10px;"><i class="fa-solid fa-clock-rotate-left"></i></h3>
-                    <p style="font-weight: bold; font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; letter-spacing: 1px;">PAST SCRIMS</p>
-                    <span style="font-size: var(--font-sm); color: #ccc;">Check Match Results</span>
-                </div>
-                <div class="custom-form-box" style="text-align: center; max-width: 220px; padding: 25px; cursor: pointer; transition: 0.3s; box-shadow: 0 4px 15px rgba(255, 42, 42, 0.2);" onclick="document.querySelector('a[href=\'#scrims\']').click()" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
-                    <h3 style="color: var(--status-upcoming); font-size: var(--font-xl); margin-bottom: 10px;"><i class="fa-solid fa-fire"></i></h3>
-                    <p style="font-weight: bold; font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; letter-spacing: 1px;">UPCOMING</p>
-                    <span style="font-size: var(--font-sm); color: #ccc;">Register For Battles</span>
-                </div>
-            </div>
         </section>
 
         <!-- Dynamic Sections -->
         <section id="scrims" class="page-section"><h2 class="sec-title">Free Scrims</h2><div class="grid-container" id="scrims-list"></div></section>
         <section id="tournaments" class="page-section"><h2 class="sec-title">Free Tournaments</h2><div class="grid-container" id="tours-list"></div></section>
-
-        <!-- Teams -->
-        <section id="teams" class="page-section">
-            <h2 class="sec-title">Team Management</h2>
-            <div class="custom-form-box" style="max-width: 500px; margin: 0 auto 30px auto;">
-                <h3>New Team</h3>
-                <p style="color:#aaa; margin-bottom:10px; font-size:var(--font-sm);">4 Players required.</p>
-                <input type="text" id="teamNameInput" placeholder="Team Name">
-                <input type="text" id="p1Input" placeholder="Player 1 IGN">
-                <input type="text" id="p2Input" placeholder="Player 2 IGN">
-                <input type="text" id="p3Input" placeholder="Player 3 IGN">
-                <input type="text" id="p4Input" placeholder="Player 4 IGN">
-                <button id="createTeamBtn">CREATE</button>
-            </div>
-            <h3 style="font-size:var(--font-xl); margin-bottom: 15px;">My Teams</h3>
-            <div class="grid-container" id="my-teams-list"></div>
-        </section>
 
         <!-- Support -->
         <section id="support" class="page-section">
@@ -522,7 +512,7 @@
 
         function escapeHTML(str) { return str ? String(str).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','\'':'&#039;'}[m])) : ''; }
 
-        let siteEntries = [], userTeams = [], userRegistrations = [], selectedEventForReg = null;
+        let siteEntries = [], userRegistrations = [], selectedEventForReg = null;
 
         document.addEventListener('DOMContentLoaded', () => {
 
@@ -546,7 +536,7 @@
                     const bgClass = 'bg-' + escapeHTML(entry.status || '').toLowerCase().replace(' ', '');
                     const hasJoined = userRegistrations.includes(entry.id);
                     
-                    let maxSlots = 12;
+                    let maxSlots = 12; // Default for "Team" format
                     if (entry.format === 'Solo') maxSlots = 48;
                     else if (entry.format?.startsWith('CS') || entry.format?.startsWith('Lone Wolf')) maxSlots = 2;
                     else if (entry.format?.startsWith('Craftland')) maxSlots = 6;
@@ -589,10 +579,9 @@
                                 document.getElementById('regModalDetails').innerHTML=`Entry Fee: <strong style="color:var(--primary);">FREE</strong>`;
                                 
                                 const isSoloFormat = ['Solo', 'CS 1v1', 'Craftland M590 Solo', 'Lone Wolf 1v1'].includes(entry.format);
-                                document.getElementById('teamSelectContainer').style.display = !isSoloFormat ? 'block' : 'none';
+                                document.getElementById('teamInputContainer').style.display = !isSoloFormat ? 'block' : 'none';
                                 document.getElementById('soloIgnContainer').style.display = isSoloFormat ? 'block' : 'none';
                                 
-                                if(!isSoloFormat){ const sel = document.getElementById('regTeamSelect'); sel.innerHTML=''; userTeams.forEach(t=>sel.innerHTML+=`<option value="${t.id}">${escapeHTML(t.teamName)}</option>`); }
                                 showModal('regModal');
                             }
                         });
@@ -629,7 +618,13 @@
                             snap.forEach(d=>{ 
                                 const dt=d.data(); 
                                 const isSoloFmt = ['Solo', 'CS 1v1', 'Craftland M590 Solo', 'Lone Wolf 1v1'].includes(dt.format);
-                                h+=`<tr><td style="color:#fff">${escapeHTML(isSoloFmt ? dt.soloIgn : dt.teamName)}</td><td style="color:#25D366; font-size:12px; font-weight:bold;">${escapeHTML(dt.userName||dt.email||dt.uid)}</td></tr>`; 
+                                let displayNames = "";
+                                if (!isSoloFmt) {
+                                    displayNames = `<span style="color:#fff; font-weight:bold;">${escapeHTML(dt.teamName)}</span><br><span style="font-size:11px; color:#ccc;">IGL: ${escapeHTML(dt.iglName)}</span>`;
+                                } else {
+                                    displayNames = `<span style="color:#fff;">${escapeHTML(dt.soloIgn || dt.teamName)}</span>`;
+                                }
+                                h+=`<tr><td>${displayNames}</td><td style="color:#25D366; font-size:12px; font-weight:bold;">${escapeHTML(dt.userName||dt.email||dt.uid)}</td></tr>`; 
                             }); 
                             list.innerHTML=h+'</table>';
                         }catch(err){ list.innerHTML='Error loading participants.'; }
@@ -651,11 +646,18 @@
 
             document.getElementById('confirmRegBtn').addEventListener('click', async(e) => {
                 if(!selectedEventForReg) return; 
-                let tId=null, tNm="", sIgn=null;
+                let tNm="", igl="", sIgn=null;
                 
                 const isSoloReg = ['Solo', 'CS 1v1', 'Craftland M590 Solo', 'Lone Wolf 1v1'].includes(selectedEventForReg.format);
-                if(!isSoloReg){ const sel=document.getElementById('regTeamSelect'); tId=sel.value; if(!tId)return alert("Please select or create a team first."); tNm=sel.options[sel.selectedIndex].text; }
-                else { sIgn=document.getElementById('regSoloIgn').value.trim(); if(!sIgn)return alert("Enter your IGN."); }
+                
+                if(!isSoloReg) { 
+                    tNm = document.getElementById('regSquadTeamName').value.trim(); 
+                    igl = document.getElementById('regSquadIgl').value.trim();
+                    if(!tNm || !igl) return alert("Please enter both Team Name and IGL Name."); 
+                } else { 
+                    sIgn=document.getElementById('regSoloIgn').value.trim(); 
+                    if(!sIgn) return alert("Enter your IGN."); 
+                }
                 
                 e.target.disabled=true;
                 
@@ -670,7 +672,7 @@
                     if(curJ>=max) throw "Event is already full!";
                     
                     t.update(eR,{joinedCount:curJ+1});
-                    t.set(doc(collection(db,'registrations')),{eventId:selectedEventForReg.id, uid:auth.currentUser.uid, userName:auth.currentUser.email, teamId:tId, teamName:tNm, soloIgn:sIgn, format:selectedEventForReg.format||'Team', createdAt:serverTimestamp()});
+                    t.set(doc(collection(db,'registrations')),{eventId:selectedEventForReg.id, uid:auth.currentUser.uid, userName:auth.currentUser.email, teamName:tNm, iglName:igl, soloIgn:sIgn, format:selectedEventForReg.format||'Team', createdAt:serverTimestamp()});
                 }); alert("Registered successfully!"); hideModal('regModal'); } catch(err){ alert("Registration Failed: "+err); } finally { e.target.disabled=false; }
             });
 
@@ -694,10 +696,9 @@
             document.getElementById('emailSignInBtn').addEventListener('click', async(e)=>{ e.target.disabled=true; try{await signInWithEmailAndPassword(auth,document.getElementById('authEmail').value,document.getElementById('authPassword').value);}catch(err){alert(err.message);} finally{e.target.disabled=false;} });
             document.getElementById('emailSignUpBtn').addEventListener('click', async(e)=>{ e.target.disabled=true; try{const res=await createUserWithEmailAndPassword(auth,document.getElementById('authEmail').value,document.getElementById('authPassword').value); await updateProfile(res.user,{displayName:document.getElementById('authDisplayName').value});}catch(err){alert(err.message);} finally{e.target.disabled=false;} });
 
-            let tSub, rSub;
+            let rSub;
             async function initUser(user) {
                 const uRef=doc(db,'users',user.uid); const uDoc=await getDoc(uRef); if(!uDoc.exists()) await setDoc(uRef,{email:user.email, createdAt:serverTimestamp()});
-                tSub=onSnapshot(query(collection(db,'teams'),where('ownerUid','==',user.uid)), s=>{ userTeams=[]; const l=document.getElementById('my-teams-list'); l.innerHTML=''; s.forEach(d=>{const tm={id:d.id,...d.data()}; userTeams.push(tm); l.innerHTML+=`<div class="gaming-card"><h3 style="color:var(--primary); font-size:16px;">${escapeHTML(tm.teamName)}</h3><p style="font-size:12px;">P1: ${escapeHTML(tm.players[0])}<br>P2: ${escapeHTML(tm.players[1])}<br>P3: ${escapeHTML(tm.players[2])}<br>P4: ${escapeHTML(tm.players[3])}</p></div>`;});});
                 rSub=onSnapshot(query(collection(db,'registrations'),where('uid','==',user.uid)), s=>{ userRegistrations=[]; s.forEach(d=>userRegistrations.push(d.data().eventId)); renderAllEntries(); });
             }
 
@@ -709,7 +710,7 @@
                     document.getElementById('login-animation').style.display='flex'; setTimeout(()=>{document.getElementById('login-animation').style.display='none'; document.getElementById('intro').style.display='flex'; setTimeout(()=>document.getElementById('intro').classList.add('active'),10);}, 1500);
                 } else {
                     document.body.classList.remove('logged-in'); document.getElementById('headerProfileIcon').style.display='none'; document.getElementById('authBox').style.display='block'; document.getElementById('userProfileCard').style.display='none';
-                    if(tSub)tSub(); if(rSub)rSub(); userTeams=[]; userRegistrations=[];
+                    if(rSub)rSub(); userRegistrations=[];
                     document.querySelectorAll('.page-section').forEach(s=>{s.style.display='none';s.classList.remove('active');}); const aS=document.getElementById('user-auth'); aS.style.display='flex'; setTimeout(()=>aS.classList.add('active'),10);
                 }
             }
@@ -718,12 +719,6 @@
             document.getElementById('userLogoutBtn').addEventListener('click', ()=>signOut(auth));
             document.getElementById('headerProfileIcon').addEventListener('click', ()=>{ const u=auth.currentUser; if(u){ document.getElementById('modalName').innerText=u.displayName||'Player'; document.getElementById('modalEmail').innerText=u.email; showModal('profileModal'); }});
 
-            document.getElementById('createTeamBtn').addEventListener('click', async(e)=>{
-                const b=e.target, n=document.getElementById('teamNameInput').value, p1=document.getElementById('p1Input').value, p2=document.getElementById('p2Input').value, p3=document.getElementById('p3Input').value, p4=document.getElementById('p4Input').value;
-                if(!n||!p1||!p2||!p3||!p4)return alert("Fill all player names!"); b.disabled=true; try{ await addDoc(collection(db,'teams'),{teamName:n,ownerUid:auth.currentUser.uid,players:[p1,p2,p3,p4],createdAt:serverTimestamp()}); alert("Team Created!"); ['teamNameInput','p1Input','p2Input','p3Input','p4Input'].forEach(id=>document.getElementById(id).value=''); }catch(err){alert("Error creating team.");}finally{b.disabled=false;}
-            });
-
-            // UPDATED: Admin password changed to strictly match "admin123"
             document.getElementById('loginBtn').addEventListener('click',()=>{ const p=document.getElementById('adminPass').value; if(p === 'admin123'){document.getElementById('admin-login-screen').style.display='none'; document.getElementById('admin-dashboard-screen').style.display='block';}else document.getElementById('adminError').style.display='block'; });
             
             document.querySelectorAll('.action-btn').forEach(btn=>btn.addEventListener('click',async()=>{
@@ -734,7 +729,6 @@
 
             const cvs = document.getElementById('live-bg'), cx = cvs.getContext('2d'); let w,h,pts=[];
             function initC(){ w=cvs.width=window.innerWidth; h=cvs.height=window.innerHeight; pts=[]; for(let i=0;i<50;i++)pts.push({x:Math.random()*w,y:Math.random()*h,s:Math.random()*2+1,vx:Math.random()*1-0.5,vy:Math.random()*1-0.5}); }
-            // UPDATED: Adjusted canvas fill to match red theme
             function animC(){ cx.clearRect(0,0,w,h); pts.forEach(p=>{cx.beginPath();cx.arc(p.x,p.y,p.s,0,Math.PI*2);cx.fillStyle='rgba(255, 42, 42, 0.3)';cx.fill();p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>w)p.vx*=-1;if(p.y<0||p.y>h)p.vy*=-1;}); requestAnimationFrame(animC); }
             initC(); animC(); window.addEventListener('resize', initC);
         });

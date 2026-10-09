@@ -26,6 +26,9 @@
         
         .idp-btn { background: #ffeb3b; color: #000; }
         .idp-btn:hover { background: #ffd600; }
+        
+        .save-btn { background: #4cd137; }
+        .save-btn:hover { background: #44bd32; }
 
         /* Bottom Navigation */
         .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; height: 60px; background: #1a1a1a; display: flex; border-top: 1px solid #333; z-index: 100; }
@@ -33,6 +36,7 @@
         .nav-item.active { color: #ff4757; background: #252525; border-bottom: 4px solid #ff4757; }
         
         #status-msg { text-align: center; margin-top: 10px; font-weight: bold; }
+        hr { border: 0; height: 1px; background: #333; margin: 30px 0; }
     </style>
 </head>
 <body>
@@ -58,19 +62,24 @@
 
         <!-- Dashboard Section (Hidden by default) -->
         <div id="admin-dashboard-section" style="display: none;">
-            <h2>PUBLISH MATCH</h2>
+            <h2>PUBLISH NEW MATCH</h2>
             <div class="card">
-                <label>Match Date:</label>
-                <input type="date" id="match-date">
+                <label>Match Date (Write anything):</label>
+                <input type="text" id="match-date" placeholder="e.g. Sunday 12th Nov">
                 
-                <label>Match Time:</label>
-                <input type="time" id="match-time">
-                
-                <label>Room ID & Password:</label>
-                <input type="text" id="match-idp" placeholder="Type anything (e.g. ID: 12345, Pass: xyz)">
+                <label>Match Time (Write anything):</label>
+                <input type="text" id="match-time" placeholder="e.g. 9:00 PM">
                 
                 <button id="publish-btn">Publish Match</button>
                 <p id="status-msg"></p>
+            </div>
+
+            <hr>
+
+            <h2>UPDATE MATCH IDP</h2>
+            <p style="text-align: center; color: #888; font-size: 14px;">Add or change IDP for published matches below.</p>
+            <div id="admin-matches-container">
+                <!-- Admin matches for adding IDP will load here -->
             </div>
         </div>
     </div>
@@ -84,9 +93,10 @@
     <!-- Firebase SDK Setup as Module -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
-        import { getFirestore, collection, addDoc, getDocs, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
+        // Added doc and updateDoc to allow updating the IDP later
+        import { getFirestore, collection, addDoc, getDocs, query, orderBy, serverTimestamp, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
 
-        // Your exact Firebase config
+        // Firebase config
         const firebaseConfig = {
             apiKey: "AIzaSyACC6nAbAb96Aw5NAe-C2aTZ8-gtOsnYzE",
             authDomain: "survivors-b9c6d.firebaseapp.com",
@@ -97,7 +107,6 @@
             measurementId: "G-1XRC9SCV59"
         };
 
-        // Initialize Firebase & Firestore
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
@@ -107,6 +116,9 @@
         const navHome = document.getElementById('nav-home');
         const navAdmin = document.getElementById('nav-admin');
         const matchesContainer = document.getElementById('matches-container');
+        const adminMatchesContainer = document.getElementById('admin-matches-container');
+
+        let isAdminLoggedIn = false;
 
         // Tab Switching Logic
         navHome.addEventListener('click', () => {
@@ -114,7 +126,7 @@
             adminView.classList.remove('active');
             navHome.classList.add('active');
             navAdmin.classList.remove('active');
-            fetchMatches();
+            fetchMatches(); // Refresh home matches
         });
 
         navAdmin.addEventListener('click', () => {
@@ -122,51 +134,61 @@
             homeView.classList.remove('active');
             navAdmin.classList.add('active');
             navHome.classList.remove('active');
+            if (isAdminLoggedIn) {
+                fetchAdminMatches(); // Refresh admin list if already logged in
+            }
         });
 
         // Admin Login Logic
         document.getElementById('login-btn').addEventListener('click', () => {
             const pass = document.getElementById('admin-pass').value;
-            if (pass === "12345") { // <--- CHANGE YOUR ADMIN PASSWORD HERE
+            // Updated Password Requirement
+            if (pass === "srv1122") { 
+                isAdminLoggedIn = true;
                 document.getElementById('admin-login-section').style.display = 'none';
                 document.getElementById('admin-dashboard-section').style.display = 'block';
+                fetchAdminMatches(); // Load matches so admin can add IDP
             } else {
                 alert("Incorrect Password!");
             }
         });
 
-        // Publish Match Logic
+        // Publish Match Logic (Creates match WITHOUT IDP initially)
         document.getElementById('publish-btn').addEventListener('click', async () => {
             const date = document.getElementById('match-date').value;
             const time = document.getElementById('match-time').value;
-            const idp = document.getElementById('match-idp').value;
             const statusMsg = document.getElementById('status-msg');
 
-            if (!date || !time || !idp) {
-                statusMsg.textContent = "Please fill in all fields.";
-                statusMsg.style.color = "#ff4757"; // Red
+            if (!date || !time) {
+                statusMsg.textContent = "Please fill in date and time.";
+                statusMsg.style.color = "#ff4757";
                 return;
             }
 
             statusMsg.textContent = "Publishing...";
-            statusMsg.style.color = "#ffeb3b"; // Yellow
+            statusMsg.style.color = "#ffeb3b";
 
             try {
-                // Add to Firestore database
+                // Add to Firestore database (IDP is blank at start)
                 await addDoc(collection(db, "matches"), {
                     date: date,
                     time: time,
-                    idp: idp,
+                    idp: "", // Empty until admin updates it
                     createdAt: serverTimestamp()
                 });
                 
                 statusMsg.textContent = "Match Published Successfully!";
-                statusMsg.style.color = "#4cd137"; // Green
+                statusMsg.style.color = "#4cd137";
                 
-                // Clear fields
+                // Clear inputs
                 document.getElementById('match-date').value = '';
                 document.getElementById('match-time').value = '';
-                document.getElementById('match-idp').value = '';
+
+                // Refresh the admin match list so the new match appears at the top
+                fetchAdminMatches();
+                
+                // Clear success message after 3 seconds
+                setTimeout(() => statusMsg.textContent = "", 3000);
             } catch (error) {
                 console.error("Error adding document: ", error);
                 statusMsg.textContent = "Error publishing match. Check console.";
@@ -174,25 +196,22 @@
             }
         });
 
-        // Fetch Matches Logic
+        // Fetch Matches for Home Screen
         async function fetchMatches() {
             matchesContainer.innerHTML = '<p style="text-align: center;">Loading matches...</p>';
             try {
-                // Query Firestore, ordered by newest first
                 const q = query(collection(db, "matches"), orderBy("createdAt", "desc"));
                 const querySnapshot = await getDocs(q);
                 
-                matchesContainer.innerHTML = ''; // Clear loading text
+                matchesContainer.innerHTML = ''; 
                 
                 if (querySnapshot.empty) {
                     matchesContainer.innerHTML = '<p style="text-align: center;">No matches published yet.</p>';
                     return;
                 }
 
-                querySnapshot.forEach((doc) => {
-                    const data = doc.data();
-                    
-                    // Create card element
+                querySnapshot.forEach((docSnap) => {
+                    const data = docSnap.data();
                     const card = document.createElement('div');
                     card.className = 'card';
                     
@@ -201,12 +220,17 @@
                         <p><strong>Time:</strong> ${data.time}</p>
                     `;
                     
-                    // Create Get IDP button safely
                     const btn = document.createElement('button');
                     btn.className = 'idp-btn';
                     btn.textContent = 'Get IDP';
+                    
                     btn.addEventListener('click', () => {
-                        alert("Room Details:\n\n" + data.idp);
+                        // Check if IDP is empty or just spaces
+                        if (!data.idp || data.idp.trim() === "") {
+                            alert("IDP has not been published yet! Please check back later.");
+                        } else {
+                            alert("Room Details:\n\n" + data.idp);
+                        }
                     });
                     
                     card.appendChild(btn);
@@ -218,7 +242,64 @@
             }
         }
 
-        // Load matches automatically when the page opens
+        // Fetch Matches for Admin Panel (To update IDP)
+        async function fetchAdminMatches() {
+            adminMatchesContainer.innerHTML = '<p style="text-align: center;">Loading...</p>';
+            try {
+                const q = query(collection(db, "matches"), orderBy("createdAt", "desc"));
+                const querySnapshot = await getDocs(q);
+                
+                adminMatchesContainer.innerHTML = '';
+                
+                if (querySnapshot.empty) {
+                    adminMatchesContainer.innerHTML = '<p style="text-align: center;">No matches found.</p>';
+                    return;
+                }
+
+                querySnapshot.forEach((docSnap) => {
+                    const data = docSnap.data();
+                    const card = document.createElement('div');
+                    card.className = 'card';
+                    
+                    card.innerHTML = `
+                        <p><strong>Date:</strong> ${data.date}</p>
+                        <p><strong>Time:</strong> ${data.time}</p>
+                        <input type="text" id="idp-input-${docSnap.id}" placeholder="Type IDP here when ready" value="${data.idp || ''}">
+                    `;
+                    
+                    const updateBtn = document.createElement('button');
+                    updateBtn.className = 'save-btn';
+                    updateBtn.textContent = 'Save IDP';
+                    
+                    // Logic to update the IDP in the database
+                    updateBtn.addEventListener('click', async () => {
+                        const newIdp = document.getElementById(`idp-input-${docSnap.id}`).value;
+                        updateBtn.textContent = 'Saving...';
+                        
+                        try {
+                            const matchRef = doc(db, "matches", docSnap.id);
+                            await updateDoc(matchRef, {
+                                idp: newIdp
+                            });
+                            updateBtn.textContent = 'Saved!';
+                            setTimeout(() => { updateBtn.textContent = 'Save IDP'; }, 2000);
+                        } catch (error) {
+                            console.error("Error updating IDP:", error);
+                            updateBtn.textContent = 'Error!';
+                            updateBtn.style.background = '#ff4757';
+                        }
+                    });
+
+                    card.appendChild(updateBtn);
+                    adminMatchesContainer.appendChild(card);
+                });
+            } catch (error) {
+                console.error("Error fetching admin matches:", error);
+                adminMatchesContainer.innerHTML = '<p style="text-align: center; color: red;">Failed to load.</p>';
+            }
+        }
+
+        // Load matches on first open
         fetchMatches();
     </script>
 </body>

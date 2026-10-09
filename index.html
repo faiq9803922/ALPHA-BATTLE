@@ -30,9 +30,8 @@
         .save-btn { background: #4cd137; }
         .save-btn:hover { background: #44bd32; }
 
-        /* New Delete Button Style */
-        .delete-btn { background: #e84118; margin-top: 10px; }
-        .delete-btn:hover { background: #c23616; }
+        .delete-btn { background: #c23616; margin-top: 10px; }
+        .delete-btn:hover { background: #8c250e; }
 
         /* Bottom Navigation */
         .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; height: 60px; background: #1a1a1a; display: flex; border-top: 1px solid #333; z-index: 100; }
@@ -68,9 +67,8 @@
         <div id="admin-dashboard-section" style="display: none;">
             <h2>PUBLISH NEW MATCH</h2>
             <div class="card">
-                <!-- Added Tournament Name Input -->
                 <label>Tournament Name:</label>
-                <input type="text" id="match-tournament" placeholder="e.g. Weekend Scrims">
+                <input type="text" id="match-tournament" placeholder="e.g. Weekly Scrims">
 
                 <label>Match Date (Write anything):</label>
                 <input type="text" id="match-date" placeholder="e.g. Sunday 12th Nov">
@@ -87,7 +85,7 @@
             <h2>UPDATE & MANAGE MATCHES</h2>
             <p style="text-align: center; color: #888; font-size: 14px;">Add IDP or delete published matches below.</p>
             <div id="admin-matches-container">
-                <!-- Admin matches for adding IDP and deleting will load here -->
+                <!-- Admin matches for adding IDP will load here -->
             </div>
         </div>
     </div>
@@ -101,10 +99,22 @@
     <!-- Firebase SDK Setup as Module -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
-        // Added deleteDoc to the imports
+        // Added doc, updateDoc, and deleteDoc
         import { getFirestore, collection, addDoc, getDocs, query, orderBy, serverTimestamp, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
 
         // Firebase config
         const firebaseConfig = {
             apiKey: "AIzaSyACC6nAbAb96Aw5NAe-C2aTZ8-gtOsnYzE",
-            authDomain: "survivors-b9
+            authDomain: "survivors-b9c6d.firebaseapp.com",
+            projectId: "survivors-b9c6d",
+            storageBucket: "survivors-b9c6d.firebasestorage.app",
+            messagingSenderId: "289481978081",
+            appId: "1:289481978081:web:68e424068ff9d056d607a0",
+            measurementId: "G-1XRC9SCV59"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // UI Elements
+        const homeView = document.getElementById('home-view');
